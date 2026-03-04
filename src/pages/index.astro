@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TilCard from '../components/TilCard.astro';
+
+const allTils = await getCollection('til', ({ data }) => {
+  return data.draft !== true;
+});
+
+const sortedTils = allTils.sort((a, b) =>
+  b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout>
+  <section class="til-list">
+    <h1>Aprendizajes</h1>
+    {sortedTils.length === 0 ? (
+      <p class="empty">No hay entradas todavia. Crea tu primera TIL en <code>src/content/til/</code></p>
+    ) : (
+      sortedTils.map(til => (
+        <TilCard
+          title={til.data.title}
+          date={til.data.date}
+          slug={til.id}
+          tags={til.data.tags}
+        />
+      ))
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .empty {
+    color: var(--color-text-muted);
+    padding: var(--spacing-xl) 0;
+  }
+
+  .empty code {
+    font-family: var(--font-mono);
+    background-color: var(--color-tag-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+</style>

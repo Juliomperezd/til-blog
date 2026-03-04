@@ -1,0 +1,38 @@
+---
+---
+
+<header class="header">
+  <div class="container">
+    <a href="/" class="logo">TIL</a>
+    <p class="tagline">Today I Learned</p>
+  </div>
+</header>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--spacing-lg) 0;
+  }
+
+  .header .container {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+  }
+
+  .logo {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+
+  .logo:hover {
+    color: var(--color-accent);
+  }
+
+  .tagline {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+</style>

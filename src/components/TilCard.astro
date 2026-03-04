@@ -1,0 +1,78 @@
+---
+interface Props {
+  title: string;
+  date: Date;
+  slug: string;
+  tags?: string[];
+}
+
+const { title, date, slug, tags } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric'
+});
+---
+
+<article class="til-card">
+  <time datetime={date.toISOString()}>{formattedDate}</time>
+  <h2>
+    <a href={`/til/${slug}`}>{title}</a>
+  </h2>
+  {tags && tags.length > 0 && (
+    <ul class="tags">
+      {tags.map(tag => (
+        <li class="tag">{tag}</li>
+      ))}
+    </ul>
+  )}
+</article>
+
+<style>
+  .til-card {
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .til-card:last-child {
+    border-bottom: none;
+  }
+
+  time {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  h2 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-top: var(--spacing-xs);
+    line-height: 1.4;
+  }
+
+  h2 a {
+    color: var(--color-text);
+  }
+
+  h2 a:hover {
+    color: var(--color-accent);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    list-style: none;
+    margin-top: var(--spacing-sm);
+  }
+
+  .tag {
+    font-size: var(--font-size-sm);
+    background-color: var(--color-tag-bg);
+    color: var(--color-tag-text);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 4px;
+  }
+</style>
