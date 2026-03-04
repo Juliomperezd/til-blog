@@ -1,6 +1,4 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -26,26 +24,15 @@ const fullTitle = title === 'TIL - Today I Learned' ? title : `${title} | TIL`;
   <title>{fullTitle}</title>
 </head>
 <body>
-  <div class="site-wrapper">
-    <Header />
-    <main class="container">
-      <slot />
-    </main>
-    <Footer />
-  </div>
+  <main class="container">
+    <slot />
+  </main>
 </body>
 </html>
 
 <style>
-  .site-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
   main {
-    flex: 1;
-    padding-top: var(--spacing-xl);
+    padding-top: var(--spacing-2xl);
     padding-bottom: var(--spacing-2xl);
   }
 </style>

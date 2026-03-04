@@ -15,28 +15,31 @@ const formattedDate = date.toLocaleDateString('es-ES', {
 });
 ---
 
-<article class="til-card">
-  <time datetime={date.toISOString()}>{formattedDate}</time>
-  <h2>
-    <a href={`/til/${slug}`}>{title}</a>
-  </h2>
-  {tags && tags.length > 0 && (
-    <ul class="tags">
-      {tags.map(tag => (
-        <li class="tag">{tag}</li>
-      ))}
-    </ul>
-  )}
-</article>
+<a href={`/til/${slug}`} class="til-card">
+  <article>
+    <time datetime={date.toISOString()}>{formattedDate}</time>
+    <h2>{title}</h2>
+    {tags && tags.length > 0 && (
+      <ul class="tags">
+        {tags.map(tag => (
+          <li class="tag">{tag}</li>
+        ))}
+      </ul>
+    )}
+  </article>
+</a>
 
 <style>
   .til-card {
-    padding: var(--spacing-lg) 0;
-    border-bottom: 1px solid var(--color-border);
+    display: block;
+    padding: var(--spacing-lg);
+    margin: 0 calc(-1 * var(--spacing-lg));
+    border-radius: var(--border-radius);
+    transition: background-color 0.15s ease;
   }
 
-  .til-card:last-child {
-    border-bottom: none;
+  .til-card:hover {
+    background-color: var(--color-card-hover);
   }
 
   time {
@@ -46,18 +49,12 @@ const formattedDate = date.toLocaleDateString('es-ES', {
   }
 
   h2 {
-    font-size: var(--font-size-lg);
+    font-size: 40px;
     font-weight: 600;
-    margin-top: var(--spacing-xs);
-    line-height: 1.4;
-  }
-
-  h2 a {
+    margin-top: 16px;
+    line-height: 32px;
+    letter-spacing: -0.10em;
     color: var(--color-text);
-  }
-
-  h2 a:hover {
-    color: var(--color-accent);
   }
 
   .tags {
@@ -65,7 +62,7 @@ const formattedDate = date.toLocaleDateString('es-ES', {
     flex-wrap: wrap;
     gap: var(--spacing-sm);
     list-style: none;
-    margin-top: var(--spacing-sm);
+    margin-top: 16px;
   }
 
   .tag {
