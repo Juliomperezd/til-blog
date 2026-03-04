@@ -15,33 +15,35 @@ src/
 ├── content.config.ts          # Schema: title, date, tags, draft
 ├── content/til/               # Entradas Markdown
 ├── layouts/BaseLayout.astro   # Layout base (sin header ni footer)
-├── components/TilCard.astro   # Card con hover gris
+├── components/TilCard.astro   # Card blanca con hover gris
 ├── pages/
-│   ├── index.astro            # Listado con titulo "TIL."
+│   ├── index.astro            # Titulo TIL. + listado de cards
 │   └── til/[slug].astro       # Pagina individual
 └── styles/global.css          # Variables CSS
 ```
 
 ## Estilos
 
-- **Tipografia display:** Syne (Google Fonts) — headlines, UI, branding
-- **Tipografia mono:** JetBrains Mono (Google Fonts) — fechas, tags, código, prose
+- **Tipografia:** JetBrains Mono para todo (display + mono)
 - **Fondo:** Blanco (#ffffff)
 - **Texto:** Near-black (#0d0d0d)
-- **Header y Footer:** activos con borde 2px negro
+- **Sin header ni footer**
 
 ### Cards (index)
-- Titulo: clamp(1.375rem, 3vw, 1.875rem), Syne bold, letter-spacing -0.03em
-- Meta (fecha + tags): JetBrains Mono xs, uppercase
-- Tags: outlined (border), sin fondo
-- Hover: underline en titulo + flecha → animada
+- Titulo blog: clamp(2.75rem, 6vw, 3.75rem), weight 800, encima de las cards
+- Titulo card: clamp(1.375rem, 3vw, 1.875rem), weight 700, letter-spacing -0.03em
+- Fecha: JetBrains Mono xs, uppercase, muted
+- Fondo default: blanco (#ffffff)
+- Fondo hover: #F0F0F0, transicion 0.35s ease
+- Padding: 24px arriba/abajo, 16px lados
+- Border radius: 10px
 
 ### Pagina interior
-- Titulo: clamp(2.5rem, 8vw, 5.5rem), Syne 800, line-height 0.95, letter-spacing -0.04em
-- Linea 2px negra bajo el titulo
-- Back nav: mono xs uppercase
+- Back nav: mono xs uppercase, muted
+- Fecha: mono xs uppercase, muted
+- Titulo: clamp(2.5rem, 8vw, 5.5rem), weight 800, line-height 0.95, letter-spacing -0.04em
 - Prose: JetBrains Mono 0.9375rem, line-height 1.85
-- Subtitulos en prose: Syne bold 1.125rem
+- Subtitulos en prose: JetBrains Mono bold 1.125rem
 
 ## Crear nueva entrada
 
