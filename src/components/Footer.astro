@@ -2,25 +2,40 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
+<footer class="site-footer">
   <div class="container">
-    <p>&copy; {year} TIL</p>
+    <div class="footer-inner">
+      <span class="footer-brand">TIL.</span>
+      <span class="footer-copy">&copy; {year} — Aprendiendo en público</span>
+    </div>
   </div>
 </footer>
 
 <style>
-  .footer {
-    border-top: 1px solid var(--color-border);
-    padding: var(--spacing-lg) 0;
+  .site-footer {
     margin-top: auto;
+    padding: 2.5rem 0 2rem;
   }
 
-  .footer .container {
-    text-align: center;
+  .footer-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.25rem;
   }
 
-  .footer p {
+  .footer-brand {
+    font-family: var(--font-display);
     font-size: var(--font-size-sm);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+  }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
     color: var(--color-text-muted);
   }
 </style>

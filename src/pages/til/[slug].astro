@@ -23,67 +23,92 @@ const formattedDate = til.data.date.toLocaleDateString('es-ES', {
 
 <BaseLayout title={til.data.title}>
   <article class="til-post">
+
+    <nav class="back-nav">
+      <a href="/">← Volver</a>
+    </nav>
+
     <header>
-      <time datetime={til.data.date.toISOString()}>{formattedDate}</time>
+      <div class="post-meta">
+        <time datetime={til.data.date.toISOString()}>{formattedDate}</time>
+        {til.data.tags && til.data.tags.length > 0 && (
+          <ul class="tags">
+            {til.data.tags.map(tag => (
+              <li class="tag">{tag}</li>
+            ))}
+          </ul>
+        )}
+      </div>
       <h1>{til.data.title}</h1>
-      {til.data.tags && til.data.tags.length > 0 && (
-        <ul class="tags">
-          {til.data.tags.map(tag => (
-            <li class="tag">{tag}</li>
-          ))}
-        </ul>
-      )}
     </header>
+
     <div class="prose">
       <Content />
     </div>
-    <footer>
-      <a href="/">&larr; Volver al listado</a>
-    </footer>
+
   </article>
 </BaseLayout>
 
 <style>
-  .til-post header {
-    margin-bottom: var(--spacing-xl);
-    padding-bottom: var(--spacing-lg);
-    border-bottom: 1px solid var(--color-border);
+  .til-post {
+    max-width: 100%;
+  }
+
+  .back-nav {
+    margin-bottom: 2.5rem;
+  }
+
+  .back-nav a {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.15s;
+  }
+
+  .back-nav a:hover {
+    color: var(--color-text);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   time {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
     font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
     text-transform: capitalize;
-  }
-
-  h1 {
-    font-size: 88px;
-    font-weight: 700;
-    margin-top: 32px;
-    line-height: 0.9;
-    letter-spacing: -0.06em;
+    letter-spacing: 0.06em;
   }
 
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-sm);
+    gap: 0.375rem;
     list-style: none;
-    margin-top: 32px;
   }
 
   .tag {
-    font-size: var(--font-size-sm);
-    background-color: var(--color-tag-bg);
-    color: var(--color-tag-text);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    padding: 0.1em 0.5em;
+    letter-spacing: 0.04em;
   }
 
-  .til-post footer {
-    margin-top: var(--spacing-2xl);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-border);
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
   }
+
 </style>

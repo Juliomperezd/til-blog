@@ -24,20 +24,24 @@ src/
 
 ## Estilos
 
-- **Tipografia:** IBM Plex Mono (Google Fonts)
+- **Tipografia display:** Syne (Google Fonts) — headlines, UI, branding
+- **Tipografia mono:** JetBrains Mono (Google Fonts) — fechas, tags, código, prose
 - **Fondo:** Blanco (#ffffff)
-- **Sin header ni footer**
+- **Texto:** Near-black (#0d0d0d)
+- **Header y Footer:** activos con borde 2px negro
 
 ### Cards (index)
-- Titulo: 40px, line-height 32px, letter-spacing -0.10em
-- Espaciado fecha-titulo-tags: 16px
-- Hover: fondo gris (#f5f5f5)
+- Titulo: clamp(1.375rem, 3vw, 1.875rem), Syne bold, letter-spacing -0.03em
+- Meta (fecha + tags): JetBrains Mono xs, uppercase
+- Tags: outlined (border), sin fondo
+- Hover: underline en titulo + flecha → animada
 
 ### Pagina interior
-- Titulo: 88px, line-height 0.9, letter-spacing -0.06em
-- Espaciado fecha-titulo-tags: 32px
-- Parrafos: 14px
-- Subtitulos (h2, h3...): 32px, letter-spacing -0.05em
+- Titulo: clamp(2.5rem, 8vw, 5.5rem), Syne 800, line-height 0.95, letter-spacing -0.04em
+- Linea 2px negra bajo el titulo
+- Back nav: mono xs uppercase
+- Prose: JetBrains Mono 0.9375rem, line-height 1.85
+- Subtitulos en prose: Syne bold 1.125rem
 
 ## Crear nueva entrada
 
