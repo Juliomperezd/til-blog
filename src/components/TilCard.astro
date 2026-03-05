@@ -28,14 +28,11 @@ const formattedDate = date.toLocaleDateString('es-ES', {
     flex-direction: column;
     justify-content: space-between;
     min-height: 180px;
-    background: #0d0d1c;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 32px 28px 28px;
     margin-bottom: 0.625rem;
     border-radius: var(--radius);
-    position: relative;
-    transform-style: preserve-3d;
-    will-change: transform;
     cursor: pointer;
     animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-delay: var(--delay);
@@ -46,67 +43,6 @@ const formattedDate = date.toLocaleDateString('es-ES', {
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Rainbow holographic border — sits 1px outside the card */
-  .til-card::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: calc(var(--radius) + 1px);
-    background: conic-gradient(
-      from var(--holo-angle, 0deg) at 50% 50%,
-      #ff0080, #ff6600, #ffee00, #00ff88, #00aaff, #aa00ff, #ff0080
-    );
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  /* Holographic sheen — follows mouse via --mx / --my */
-  .til-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background:
-      radial-gradient(
-        ellipse at var(--mx, 50%) var(--my, 50%),
-        rgba(255, 255, 255, 0.14) 0%,
-        transparent 52%
-      ),
-      linear-gradient(
-        var(--holo-angle, 130deg),
-        rgba(255, 0, 128, 0.12) 0%,
-        rgba(255, 140, 0, 0.12) 15%,
-        rgba(240, 235, 0, 0.12) 30%,
-        rgba(0, 255, 120, 0.12) 45%,
-        rgba(0, 160, 255, 0.12) 60%,
-        rgba(130, 0, 255, 0.12) 75%,
-        rgba(255, 0, 128, 0.12) 90%
-      );
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    pointer-events: none;
-    mix-blend-mode: screen;
-    z-index: 1;
-  }
-
-  .til-card:hover::before { opacity: 0.85; }
-  .til-card:hover::after  { opacity: 1; }
-
-  .til-card:hover {
-    box-shadow:
-      0 20px 60px rgba(0, 0, 0, 0.55),
-      0 0 40px rgba(120, 80, 255, 0.12);
-  }
-
-  .til-card:hover .arrow {
-    opacity: 1;
-    transform: translateX(4px);
-    color: var(--color-accent);
-  }
-
-  .til-card:hover h2 { color: #f0f6ff; }
-
   time {
     font-family: var(--font-mono);
     font-size: var(--font-size-xs);
@@ -115,8 +51,6 @@ const formattedDate = date.toLocaleDateString('es-ES', {
     letter-spacing: 0.08em;
     display: block;
     margin-bottom: 1rem;
-    position: relative;
-    z-index: 2;
   }
 
   h2 {
@@ -126,120 +60,14 @@ const formattedDate = date.toLocaleDateString('es-ES', {
     line-height: 1.15;
     letter-spacing: -0.03em;
     color: var(--color-text);
-    transition: color 0.2s ease;
     flex: 1;
-    position: relative;
-    z-index: 2;
   }
 
   .arrow {
     font-family: var(--font-mono);
     font-size: 0.9rem;
     color: var(--color-text-muted);
-    opacity: 0;
     align-self: flex-end;
-    position: relative;
-    z-index: 2;
     margin-top: 1.5rem;
-    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
   }
 </style>
-
-<script>
-  (function () {
-    const TILT_MAX = 13;
-    let lastParticleTime = 0;
-    const PARTICLE_THROTTLE = 10;
-
-    function spawnParticle(x: number, y: number) {
-      const el = document.createElement('div');
-      const size = Math.random() * 7 + 1.5;
-      const hue  = Math.random() * 360;
-      const hue2 = (hue + 70 + Math.random() * 130) % 360;
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 65 + 22;
-      const dx  = Math.cos(angle) * speed;
-      const dy  = Math.sin(angle) * speed;
-      const dur = Math.random() * 650 + 350;
-      const shapes = ['50%', '50%', '50%', '2px', '0', '30%'];
-      const br = shapes[Math.floor(Math.random() * shapes.length)];
-
-      el.style.cssText = `
-        position:fixed;
-        left:${x}px;top:${y}px;
-        width:${size}px;height:${size}px;
-        border-radius:${br};
-        background:hsl(${hue},100%,72%);
-        box-shadow:0 0 ${size * 2}px hsl(${hue},100%,72%),
-                   0 0 ${size * 8}px hsl(${hue2},100%,65%);
-        pointer-events:none;
-        z-index:9999;
-      `;
-      document.body.appendChild(el);
-
-      el.animate(
-        [
-          { opacity: 1, transform: 'translate(-50%,-50%) scale(1)' },
-          { opacity: 0, transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0.05)` },
-        ],
-        { duration: dur, easing: 'cubic-bezier(0,0.9,0.57,1)', fill: 'forwards' }
-      ).onfinish = () => el.remove();
-    }
-
-    function emitBurst(x: number, y: number) {
-      const now = Date.now();
-      if (now - lastParticleTime < PARTICLE_THROTTLE) return;
-      lastParticleTime = now;
-      const count = Math.floor(Math.random() * 3) + 3; // 3–5 particles
-      for (let i = 0; i < count; i++) spawnParticle(x, y);
-    }
-
-    function initCard(card: HTMLElement) {
-      let hovering = false;
-
-      card.addEventListener('mouseenter', () => {
-        hovering = true;
-        card.style.animation = 'none'; // evita que la animación CSS overridee el transform de JS
-        card.style.transition = 'box-shadow 0.3s ease';
-      });
-
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const cx = rect.left + rect.width  / 2;
-        const cy = rect.top  + rect.height / 2;
-        const dx = (e.clientX - cx) / (rect.width  / 2); // -1 → 1
-        const dy = (e.clientY - cy) / (rect.height / 2); // -1 → 1
-
-        // Push effect: mouse side sinks in, opposite side lifts up
-        const rotX = dy *  TILT_MAX;
-        const rotY = dx * -TILT_MAX;
-        // El punto de presión se hunde en Z, el lado opuesto sube
-        const sinkZ = (Math.abs(dx) + Math.abs(dy)) * -6;
-        const mx   = ((e.clientX - rect.left) / rect.width)  * 100;
-        const my   = ((e.clientY - rect.top)  / rect.height) * 100;
-        const holoAngle = Math.atan2(dy, dx) * (180 / Math.PI) + 180;
-
-        card.style.transform = `perspective(400px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(${sinkZ}px)`;
-        card.style.setProperty('--mx', `${mx}%`);
-        card.style.setProperty('--my', `${my}%`);
-        card.style.setProperty('--holo-angle', `${holoAngle}deg`);
-
-        emitBurst(e.clientX, e.clientY);
-      });
-
-      card.addEventListener('mouseleave', () => {
-        hovering = false;
-        card.style.transition =
-          'transform 0.6s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s ease';
-        card.style.transform = 'perspective(400px) rotateX(0deg) rotateY(0deg)';
-        card.style.removeProperty('--mx');
-        card.style.removeProperty('--my');
-        card.style.removeProperty('--holo-angle');
-
-        setTimeout(() => { if (!hovering) card.style.transition = ''; }, 650);
-      });
-    }
-
-    document.querySelectorAll<HTMLElement>('.til-card').forEach(initCard);
-  })();
-</script>

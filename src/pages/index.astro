@@ -25,11 +25,6 @@ const lastUpdated = sortedTils[0]?.data.date.toLocaleDateString('es-ES', {
         <span>~/aprendizajes</span>
       </div>
       <h1 class="blog-title">TIL<span class="cursor">_</span></h1>
-      <p class="header-meta">
-        <span>{sortedTils.length} entradas</span>
-        <span class="sep">·</span>
-        <span>actualizado {lastUpdated}</span>
-      </p>
     </header>
 
     <div class="divider"></div>
@@ -71,19 +66,17 @@ const lastUpdated = sortedTils[0]?.data.date.toLocaleDateString('es-ES', {
     gap: 0.5rem;
     font-family: var(--font-mono);
     font-size: var(--font-size-xs);
-    color: var(--color-accent);
+    color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.12em;
     margin-bottom: 0.875rem;
-    opacity: 0.85;
   }
 
   .dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--color-accent);
-    box-shadow: 0 0 6px var(--color-accent);
+    background: var(--color-text-muted);
     animation: pulse 2.5s ease-in-out infinite;
   }
 
@@ -103,7 +96,7 @@ const lastUpdated = sortedTils[0]?.data.date.toLocaleDateString('es-ES', {
   }
 
   .cursor {
-    color: var(--color-accent);
+    color: var(--color-text);
     animation: blink 1.1s step-end infinite;
   }
 
