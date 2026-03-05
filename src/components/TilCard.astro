@@ -147,7 +147,7 @@ const formattedDate = date.toLocaleDateString('es-ES', {
 
 <script>
   (function () {
-    const TILT_MAX = 40;
+    const TILT_MAX = 55;
     let lastParticleTime = 0;
     const PARTICLE_THROTTLE = 10;
 
@@ -199,6 +199,7 @@ const formattedDate = date.toLocaleDateString('es-ES', {
 
       card.addEventListener('mouseenter', () => {
         hovering = true;
+        card.style.animation = 'none'; // evita que la animación CSS overridee el transform de JS
         card.style.transition = 'box-shadow 0.3s ease';
       });
 
@@ -212,11 +213,13 @@ const formattedDate = date.toLocaleDateString('es-ES', {
         // Push effect: mouse side sinks in, opposite side lifts up
         const rotX = dy *  TILT_MAX;
         const rotY = dx * -TILT_MAX;
+        // El punto de presión se hunde en Z, el lado opuesto sube
+        const sinkZ = (Math.abs(dx) + Math.abs(dy)) * -25;
         const mx   = ((e.clientX - rect.left) / rect.width)  * 100;
         const my   = ((e.clientY - rect.top)  / rect.height) * 100;
         const holoAngle = Math.atan2(dy, dx) * (180 / Math.PI) + 180;
 
-        card.style.transform = `perspective(280px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        card.style.transform = `perspective(200px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(${sinkZ}px)`;
         card.style.setProperty('--mx', `${mx}%`);
         card.style.setProperty('--my', `${my}%`);
         card.style.setProperty('--holo-angle', `${holoAngle}deg`);
@@ -228,7 +231,7 @@ const formattedDate = date.toLocaleDateString('es-ES', {
         hovering = false;
         card.style.transition =
           'transform 0.6s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s ease';
-        card.style.transform = 'perspective(280px) rotateX(0deg) rotateY(0deg)';
+        card.style.transform = 'perspective(200px) rotateX(0deg) rotateY(0deg)';
         card.style.removeProperty('--mx');
         card.style.removeProperty('--my');
         card.style.removeProperty('--holo-angle');
