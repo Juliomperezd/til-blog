@@ -17,23 +17,21 @@ const formattedDate = date.toLocaleDateString('es-ES', {
 ---
 
 <a href={`/til/${slug}`} class="til-card" style={`--delay: ${index * 70}ms`}>
-  <article>
-    <time datetime={date.toISOString()}>{formattedDate}</time>
-    <h2>{title}</h2>
-  </article>
+  <time datetime={date.toISOString()}>{formattedDate}</time>
+  <h2>{title}</h2>
   <span class="arrow">→</span>
 </a>
 
 <style>
   .til-card {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: space-between;
-    gap: 1rem;
+    min-height: 180px;
     background: #0d0d1c;
     border: 1px solid rgba(255, 255, 255, 0.07);
-    padding: 18px 20px;
-    margin-bottom: 0.5rem;
+    padding: 32px 28px 28px;
+    margin-bottom: 0.625rem;
     border-radius: var(--radius);
     position: relative;
     transform-style: preserve-3d;
@@ -103,18 +101,11 @@ const formattedDate = date.toLocaleDateString('es-ES', {
 
   .til-card:hover .arrow {
     opacity: 1;
-    transform: translateX(3px);
+    transform: translateX(4px);
     color: var(--color-accent);
   }
 
   .til-card:hover h2 { color: #f0f6ff; }
-
-  article {
-    position: relative;
-    z-index: 2;
-    flex: 1;
-    min-width: 0;
-  }
 
   time {
     font-family: var(--font-mono);
@@ -123,20 +114,22 @@ const formattedDate = date.toLocaleDateString('es-ES', {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     display: block;
-    margin-bottom: 0.45rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
   }
 
   h2 {
     font-family: var(--font-display);
-    font-size: clamp(1.05rem, 2.5vw, 1.4rem);
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
     color: var(--color-text);
     transition: color 0.2s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    flex: 1;
+    position: relative;
+    z-index: 2;
   }
 
   .arrow {
@@ -144,9 +137,10 @@ const formattedDate = date.toLocaleDateString('es-ES', {
     font-size: 0.9rem;
     color: var(--color-text-muted);
     opacity: 0;
-    flex-shrink: 0;
+    align-self: flex-end;
     position: relative;
     z-index: 2;
+    margin-top: 1.5rem;
     transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
   }
 </style>
@@ -215,13 +209,14 @@ const formattedDate = date.toLocaleDateString('es-ES', {
         const dx = (e.clientX - cx) / (rect.width  / 2); // -1 → 1
         const dy = (e.clientY - cy) / (rect.height / 2); // -1 → 1
 
-        const rotX = dy * -TILT_MAX;
-        const rotY = dx *  TILT_MAX;
+        // Push effect: mouse side sinks in, opposite side lifts up
+        const rotX = dy *  TILT_MAX;
+        const rotY = dx * -TILT_MAX;
         const mx   = ((e.clientX - rect.left) / rect.width)  * 100;
         const my   = ((e.clientY - rect.top)  / rect.height) * 100;
         const holoAngle = Math.atan2(dy, dx) * (180 / Math.PI) + 180;
 
-        card.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.028,1.028,1.028)`;
+        card.style.transform = `perspective(500px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
         card.style.setProperty('--mx', `${mx}%`);
         card.style.setProperty('--my', `${my}%`);
         card.style.setProperty('--holo-angle', `${holoAngle}deg`);
@@ -233,7 +228,7 @@ const formattedDate = date.toLocaleDateString('es-ES', {
         hovering = false;
         card.style.transition =
           'transform 0.6s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s ease';
-        card.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+        card.style.transform = 'perspective(500px) rotateX(0deg) rotateY(0deg)';
         card.style.removeProperty('--mx');
         card.style.removeProperty('--my');
         card.style.removeProperty('--holo-angle');
