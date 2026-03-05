@@ -29,11 +29,30 @@ const formattedDate = date.toLocaleDateString('es-ES', {
     padding: 24px 16px;
     margin-bottom: 0.75rem;
     border-radius: 10px;
-    transition: background-color 0.35s ease;
+    position: relative;
+    overflow: hidden;
   }
 
-  .til-card:hover {
-    background-color: #F0F0F0;
+  .til-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #ff0000, #ffffff);
+    opacity: 0;
+    transform: translateY(30%);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    border-radius: 10px;
+    pointer-events: none;
+  }
+
+  .til-card:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .til-card article {
+    position: relative;
+    z-index: 1;
   }
 
   time {
