@@ -147,7 +147,7 @@ const formattedDate = date.toLocaleDateString('es-ES', {
 
 <script>
   (function () {
-    const TILT_MAX = 14;
+    const TILT_MAX = 40;
     let lastParticleTime = 0;
     const PARTICLE_THROTTLE = 10;
 
@@ -216,7 +216,7 @@ const formattedDate = date.toLocaleDateString('es-ES', {
         const my   = ((e.clientY - rect.top)  / rect.height) * 100;
         const holoAngle = Math.atan2(dy, dx) * (180 / Math.PI) + 180;
 
-        card.style.transform = `perspective(500px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        card.style.transform = `perspective(280px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
         card.style.setProperty('--mx', `${mx}%`);
         card.style.setProperty('--my', `${my}%`);
         card.style.setProperty('--holo-angle', `${holoAngle}deg`);
@@ -228,7 +228,7 @@ const formattedDate = date.toLocaleDateString('es-ES', {
         hovering = false;
         card.style.transition =
           'transform 0.6s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s ease';
-        card.style.transform = 'perspective(500px) rotateX(0deg) rotateY(0deg)';
+        card.style.transform = 'perspective(280px) rotateX(0deg) rotateY(0deg)';
         card.style.removeProperty('--mx');
         card.style.removeProperty('--my');
         card.style.removeProperty('--holo-angle');
